@@ -1,0 +1,22 @@
+# Godot 4 files
+.import/
+export.cfg
+export_presets.cfg
+.mono/
+data_*/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+*.tmp
+*.log
+
+# AI API keys and secrets
+.env
+config/api_keys.json
