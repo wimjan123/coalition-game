@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=4 format=3]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.09, 0.11, 0.15, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.13, 0.16, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[resource]
+default_font_size = 16
+default_font_size_small = 14
+set_color("font_color", "Label", Color(0.88, 0.91, 0.96, 1))
+set_color("font_color", "Button", Color(0.9, 0.93, 0.98, 1))
+set_color("font_pressed_color", "Button", Color(0.98, 0.88, 0.5, 1))
+set_stylebox("panel", "Panel", SubResource("1"))
+set_stylebox("normal", "Button", SubResource("2"))
+set_constant("separation", "VBoxContainer", 12)

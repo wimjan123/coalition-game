@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=2 format=3]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.16, 0.1, 0.26, 0.95)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.63, 0.39, 0.96, 0.8)
+
+[resource]
+default_font_size = 18
+set_color("font_color", "Label", Color(0.95, 0.92, 1.0, 1))
+set_stylebox("panel", "Panel", SubResource("1"))

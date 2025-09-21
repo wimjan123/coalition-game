@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/apps/social/SocialFeedApp.gd" id="1"]
+
+[node name="Social" type="Window"]
+initial_position = Vector2i(40, 720)
+size = Vector2i(480, 600)
+script = ExtResource("1")
+
+[node name="Content" type="VBoxContainer" parent="Social"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+custom_constants/separation = 16
+
+[node name="Composer" type="VBoxContainer" parent="Social/Content"]
+custom_constants/separation = 8
+
+[node name="TagOptions" type="OptionButton" parent="Social/Content/Composer"]
+
+[node name="Body" type="TextEdit" parent="Social/Content/Composer"]
+custom_minimum_size = Vector2(0, 120)
+wrap_mode = 2
+placeholder_text = "Draft a short update..."
+
+[node name="RemainingLabel" type="Label" parent="Social/Content/Composer"]
+text = "Posts remaining: 1"
+
+[node name="SendButton" type="Button" parent="Social/Content/Composer"]
+text = "Post Update"
+
+[node name="FeedList" type="ItemList" parent="Social/Content"]
+size_flags_vertical = 3
+

@@ -1,0 +1,25 @@
+; Engine configuration file.
+; Generated for COALITION demo UI vertical slice.
+
+config_version=5
+
+[application]
+config/name="COALITION Demo UI"
+run/main_scene="res://scenes/desktop/DesktopRoot.tscn"
+config/features=PackedStringArray("4.0")
+
+[display]
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/subwindows/embed_subwindows=true
+
+[gdscript]
+imports=PoolStringArray()
+
+[input]
+ui_toggle_messages={"deadzone":0.5,"events":[{"as_text":","}]}
+ui_toggle_news={"deadzone":0.5,"events":[{"as_text":"."}]}
+ui_toggle_polling={"deadzone":0.5,"events":[{"as_text":"/"}]}
+ui_toggle_calendar={"deadzone":0.5,"events":[{"as_text":";"}]}
+ui_toggle_social={"deadzone":0.5,"events":[{"as_text":"'"}]}
+

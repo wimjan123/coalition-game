@@ -1,0 +1,78 @@
+{
+  "id": "coalition_talks_modal",
+  "version": 1,
+  "description": "Single decision modal offering three concessions with meter impacts and copy feedback.",
+  "entry_state": "offer_selection",
+  "states": {
+    "offer_selection": {
+      "context": {
+        "coalition_snapshot": "CoalitionContext",
+        "offers": "Array<ConcessionOption>"
+      },
+      "inputs": [
+        {
+          "event": "select_offer",
+          "payload": {
+            "offer_id": "String"
+          },
+          "transition": "resolution"
+        },
+        {
+          "event": "cancel",
+          "payload": {},
+          "transition": "modal_closed"
+        }
+      ],
+      "outputs": []
+    },
+    "resolution": {
+      "context": {
+        "selected_offer": "ConcessionOption"
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "meter_delta",
+          "payload": {
+            "meter_effects": "Map<MeterID, Float>",
+            "source": "coalition"
+          }
+        },
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "String",
+            "severity": "warning | critical"
+          }
+        },
+        {
+          "type": "feed_insert",
+          "payload": {
+            "tag": "String",
+            "persona_weights": "Map<PersonaID, Float>"
+          }
+        }
+      ],
+      "transition": "modal_closed"
+    },
+    "modal_closed": {
+      "context": {},
+      "inputs": [],
+      "outputs": []
+    }
+  },
+  "contracts": {
+    "CoalitionContext": {
+      "negotiating_parties": "Array<String>",
+      "pressure_meter_id": "String"
+    },
+    "ConcessionOption": {
+      "id": "String",
+      "label_key": "String",
+      "description_key": "String",
+      "meter_effects": "Map<MeterID, Float>",
+      "tag": "String",
+      "toast_template_id": "String"
+    }
+  }
+}

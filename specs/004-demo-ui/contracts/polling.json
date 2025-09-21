@@ -1,0 +1,54 @@
+{
+  "id": "polling_app",
+  "version": 1,
+  "description": "Meter dashboard updating after every decision with commentary and alerts.",
+  "entry_state": "dashboard",
+  "states": {
+    "dashboard": {
+      "context": {
+        "meters": "Array<MeterSnapshot>",
+        "commentary": "Array<CommentaryLine>"
+      },
+      "inputs": [
+        {
+          "event": "refresh_metrics",
+          "payload": {
+            "meter_updates": "Array<MeterSnapshot>"
+          },
+          "transition": "dashboard"
+        },
+        {
+          "event": "acknowledge_warning",
+          "payload": {
+            "meter_id": "String"
+          },
+          "transition": "dashboard"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "String",
+            "severity": "warning | critical",
+            "visible_condition": "Meter.is_critical == true"
+          }
+        }
+      ]
+    }
+  },
+  "contracts": {
+    "MeterSnapshot": {
+      "id": "String",
+      "value": "Float",
+      "trend": "String",
+      "is_critical": "Bool",
+      "copy_variant": "String"
+    },
+    "CommentaryLine": {
+      "id": "String",
+      "body_key": "String",
+      "tone": "neutral | pressure | crisis"
+    }
+  }
+}

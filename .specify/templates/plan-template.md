@@ -47,7 +47,11 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] Principle I – Describe how linting, formatting, static analysis, and documentation deliverables will be satisfied.
+- [ ] Principle II – Enumerate the failing test suite (unit, integration, contract, UX) and confirm 95% coverage targets for critical systems.
+- [ ] Principle III – Detail UX consistency strategy, including accessibility, localization, and pattern regression validation.
+- [ ] Principle IV – Declare performance budgets (60fps, <1s transitions, <2s AI responses, <2GB peak memory) and profiling instrumentation.
+- [ ] Operational Standards – Confirm `/spec`, `/plan`, `/tasks` outputs stay in sync and list telemetry/observability assets for release.
 
 ## Project Structure
 
@@ -208,4 +212,4 @@ ios/ or android/
 - [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v1.0.0 - See `.specify/memory/constitution.md`*
+*Based on Constitution v2.2.0 - See `.specify/memory/constitution.md`*

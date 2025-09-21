@@ -1,0 +1,60 @@
+{
+  "headlines": [
+    {
+      "id": "budget_gap_widens",
+      "title": "Budget gap forces coalition back-room scramble",
+      "lead": "Finance aides warn the deficit widens by €1.3B, testing coalition unity.",
+      "framing_options": [
+        {
+          "id": "pragmatic",
+          "label": "Pragmatic: promise phased cuts",
+          "meter_effects": {"support": 1.0, "donations": -1.0},
+          "headline_variant_key": "budget_gap_pragmatic",
+          "social_tag": "#budget"
+        },
+        {
+          "id": "sensational",
+          "label": "Sensational: blame Eerste Kamer revolt",
+          "meter_effects": {"support": -2.0, "legitimacy": -1.0},
+          "headline_variant_key": "budget_gap_sensational",
+          "social_tag": "#governance"
+        },
+        {
+          "id": "reformist",
+          "label": "Reformist: tie to climate investment",
+          "meter_effects": {"legitimacy": 2.0, "donations": 1.0},
+          "headline_variant_key": "budget_gap_reformist",
+          "social_tag": "#climate"
+        }
+      ]
+    },
+    {
+      "id": "immigration_flashpoint",
+      "title": "Immigration flashpoint returns to Tweede Kamer",
+      "lead": "Opposition presses coalition over asylum processing backlogs.",
+      "framing_options": [
+        {
+          "id": "soften",
+          "label": "Soft: emphasise humane intake",
+          "meter_effects": {"legitimacy": 2.0, "support": -1.0},
+          "headline_variant_key": "immigration_soft",
+          "social_tag": "#immigration"
+        },
+        {
+          "id": "firm",
+          "label": "Firm: highlight new border controls",
+          "meter_effects": {"support": 2.0, "legitimacy": -1.0},
+          "headline_variant_key": "immigration_firm",
+          "social_tag": "#immigration"
+        },
+        {
+          "id": "deflect",
+          "label": "Deflect: pivot to coalition climate wins",
+          "meter_effects": {"support": 1.0, "donations": 1.0},
+          "headline_variant_key": "immigration_deflect",
+          "social_tag": "#climate"
+        }
+      ]
+    }
+  ]
+}

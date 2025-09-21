@@ -1,0 +1,29 @@
+{
+  "posts_remaining": 2,
+  "posts": [
+    {
+      "tag": "#budget",
+      "meter_effects": {"support": 1.0, "legitimacy": -1.0},
+      "persona_replies": [
+        {"persona": "NOS Politiek", "text": "NOS Politiek: Coalition tweet promises phased cuts—details soon."},
+        {"persona": "Beleid Nerd", "text": "Beleid Nerd: Numbers or it didn't happen."}
+      ]
+    },
+    {
+      "tag": "#immigration",
+      "meter_effects": {"support": 2.0, "legitimacy": -2.0},
+      "persona_replies": []
+    },
+    {
+      "tag": "#climate",
+      "meter_effects": {"legitimacy": 2.0, "donations": 1.0},
+      "persona_replies": [
+        {"persona": "Groen Column", "text": "Groen Column: Coalition touts climate win amid budget jitters."}
+      ]
+    }
+  ],
+  "initial_feed": [
+    {"persona": "NOS Politiek", "text": "Desktop leak: coalition to huddle on budget gap tonight."},
+    {"persona": "RefugeeWatch NL", "text": "RefugeeWatch: Tweede Kamer debate on asylum backlog kicks off at 20:00."}
+  ]
+}

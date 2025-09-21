@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/apps/polling/PollingApp.gd" id="1"]
+
+[node name="Polling" type="Window"]
+initial_position = Vector2i(1160, 160)
+size = Vector2i(420, 560)
+script = ExtResource("1")
+
+[node name="Content" type="VBoxContainer" parent="Polling"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+custom_constants/separation = 12
+
+[node name="MeterList" type="VBoxContainer" parent="Polling/Content"]
+custom_constants/separation = 8
+
+[node name="CommentaryLabel" type="Label" parent="Polling/Content"]
+text = "Commentary"
+
+[node name="Commentary" type="ItemList" parent="Polling/Content"]
+size_flags_vertical = 2
+

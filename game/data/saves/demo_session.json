@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "timestamp_iso": "2025-09-21T00:00:00Z",
+  "week_index": 0,
+  "meters": [
+    {"id": "support", "value": 65.0, "trend": "steady", "is_critical": false},
+    {"id": "legitimacy", "value": 58.0, "trend": "falling", "is_critical": false},
+    {"id": "donations", "value": 45.0, "trend": "rising", "is_critical": false}
+  ],
+  "open_windows": [
+    {"id": "messages", "rect": [180, 160, 520, 640], "is_minimized": false},
+    {"id": "news", "rect": [760, 180, 580, 520], "is_minimized": false},
+    {"id": "polling", "rect": [1180, 180, 420, 560], "is_minimized": false}
+  ],
+  "toast_queue": [],
+  "social_feed": [],
+  "latest_headlines": ["budget_gap_widens"],
+  "pending_calendar_events": ["raad_van_state_review"],
+  "debate_state": {
+    "question_id": "housing_crunch",
+    "timer_remaining": 25,
+    "answers_taken": [],
+    "news_triggered": []
+  }
+}

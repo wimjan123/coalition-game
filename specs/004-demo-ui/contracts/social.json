@@ -1,0 +1,61 @@
+{
+  "id": "social_feed_app",
+  "version": 1,
+  "description": "Compose a tagged post once per in-game day and surface persona replies.",
+  "entry_state": "composer",
+  "states": {
+    "composer": {
+      "context": {
+        "tags_available": "Array<String>",
+        "remaining_posts": "Int"
+      },
+      "inputs": [
+        {
+          "event": "submit_post",
+          "payload": {
+            "tag": "String",
+            "body_key": "String"
+          },
+          "transition": "resolution"
+        }
+      ],
+      "outputs": []
+    },
+    "resolution": {
+      "context": {
+        "submitted_tag": "String"
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "meter_delta",
+          "payload": {
+            "meter_effects": "Map<MeterID, Float>",
+            "source": "social"
+          }
+        },
+        {
+          "type": "feed_insert",
+          "payload": {
+            "tag": "String",
+            "persona_weights": "Map<PersonaID, Float>",
+            "reply_pool": "Array<LocalizedStringKey>"
+          }
+        },
+        {
+          "type": "cooldown",
+          "payload": {
+            "turns_locked": "Int"
+          }
+        }
+      ],
+      "transition": "composer"
+    }
+  },
+  "contracts": {
+    "PersonaWeights": {
+      "persona_id": "String",
+      "weight": "Float"
+    }
+  }
+}

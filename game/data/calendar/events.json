@@ -1,0 +1,22 @@
+{
+  "events": [
+    {
+      "id": "raad_van_state_review",
+      "title": "Raad van State budget review",
+      "week": 1,
+      "institution": "Raad van State",
+      "reminder_text_key": "raad_van_state_reminder",
+      "consequence": "If unprepared, Raad van State advises against the coalition budget, hurting legitimacy.",
+      "meter_targets": {"legitimacy": 55.0}
+    },
+    {
+      "id": "eerstekamer_vote",
+      "title": "Eerste Kamer climate vote",
+      "week": 2,
+      "institution": "Eerste Kamer",
+      "reminder_text_key": "eerstekamer_vote_reminder",
+      "consequence": "Losing the vote triggers harsher headlines on climate credibility.",
+      "meter_targets": {"support": 60.0, "donations": 45.0}
+    }
+  ]
+}

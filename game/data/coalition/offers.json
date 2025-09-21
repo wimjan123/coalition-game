@@ -1,0 +1,31 @@
+{
+  "context": {
+    "summary": "Party partners are demanding concessions before supporting the climate budget in Eerste Kamer."
+  },
+  "offers": [
+    {
+      "id": "infrastructure_compromise",
+      "label": "Advance rail subsidy compromise",
+      "description": "Promise phased funding for regional rail upgrades.",
+      "meter_effects": {"support": 2.0, "donations": -1.0},
+      "tag": "#infrastructure",
+      "toast_template_id": "coalition_infrastructure"
+    },
+    {
+      "id": "immigration_quota",
+      "label": "Offer tighter asylum quota",
+      "description": "Cap monthly asylum intake to appease hardliners.",
+      "meter_effects": {"support": 3.0, "legitimacy": -2.0},
+      "tag": "#immigration",
+      "toast_template_id": "coalition_immigration"
+    },
+    {
+      "id": "budget_transparency",
+      "label": "Share coalition transparency pact",
+      "description": "Publish weekly budget dashboards for Tweede Kamer.",
+      "meter_effects": {"legitimacy": 3.0, "donations": 1.0},
+      "tag": "#governance",
+      "toast_template_id": "coalition_transparency"
+    }
+  ]
+}

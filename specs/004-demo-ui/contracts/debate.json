@@ -1,0 +1,111 @@
+{
+  "id": "debate_stage",
+  "version": 1,
+  "description": "Timed question loop with three tone answers and cascading feedback.",
+  "entry_state": "question_prompt",
+  "states": {
+    "question_prompt": {
+      "context": {
+        "question": "DebateQuestion",
+        "timer_seconds": "Int"
+      },
+      "inputs": [
+        {
+          "event": "select_answer",
+          "payload": {
+            "tone": "String"
+          },
+          "transition": "resolution"
+        },
+        {
+          "event": "timer_expired",
+          "payload": {},
+          "transition": "neutral_resolution"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "timer_start",
+          "payload": {
+            "seconds": "Int"
+          }
+        }
+      ]
+    },
+    "resolution": {
+      "context": {
+        "selected_answer": "AnswerOption"
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "meter_delta",
+          "payload": {
+            "meter_effects": "Map<MeterID, Float>",
+            "source": "debate"
+          }
+        },
+        {
+          "type": "headline_injection",
+          "payload": {
+            "headline_id": "String"
+          }
+        },
+        {
+          "type": "feed_insert",
+          "payload": {
+            "tag": "String",
+            "persona_weights": "Map<PersonaID, Float>"
+          }
+        },
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "String",
+            "severity": "info | warning | critical"
+          }
+        }
+      ],
+      "transition": "question_prompt"
+    },
+    "neutral_resolution": {
+      "context": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "meter_delta",
+          "payload": {
+            "meter_effects": {
+              "legitimacy": -2.0
+            },
+            "source": "debate"
+          }
+        },
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "debate_time_out",
+            "severity": "warning"
+          }
+        }
+      ],
+      "transition": "question_prompt"
+    }
+  },
+  "contracts": {
+    "DebateQuestion": {
+      "id": "String",
+      "prompt_key": "String",
+      "answers": "Array<AnswerOption>",
+      "follow_up_headline_id": "String",
+      "social_tag": "String"
+    },
+    "AnswerOption": {
+      "tone": "String",
+      "label_key": "String",
+      "meter_effects": "Map<MeterID, Float>",
+      "toast_template_id": "String",
+      "persona_bias": "Map<PersonaID, Float>"
+    }
+  }
+}

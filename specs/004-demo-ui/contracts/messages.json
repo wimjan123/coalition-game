@@ -1,0 +1,94 @@
+{
+  "id": "messages_app",
+  "version": 1,
+  "description": "Party staff chat threads with branching replies that nudge meters and trigger cross-app copy.",
+  "entry_state": "thread_list",
+  "states": {
+    "thread_list": {
+      "context": {
+        "threads": "Array<ThreadSummary>"
+      },
+      "inputs": [
+        {
+          "event": "select_thread",
+          "payload": {
+            "thread_id": "String"
+          },
+          "transition": "reading_thread"
+        }
+      ],
+      "outputs": []
+    },
+    "reading_thread": {
+      "context": {
+        "messages": "Array<MessageBubble>",
+        "available_replies": "Array<ReplyOption>"
+      },
+      "inputs": [
+        {
+          "event": "choose_reply",
+          "payload": {
+            "reply_id": "String"
+          },
+          "transition": "resolution_pending"
+        },
+        {
+          "event": "back_to_threads",
+          "payload": {},
+          "transition": "thread_list"
+        }
+      ],
+      "outputs": []
+    },
+    "resolution_pending": {
+      "context": {
+        "selected_reply": "ReplyOption"
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "meter_delta",
+          "payload": {
+            "meter_effects": "Map<MeterID, Float>",
+            "source": "messages"
+          }
+        },
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "String",
+            "severity": "info | warning | critical"
+          }
+        },
+        {
+          "type": "feed_insert",
+          "payload": {
+            "tag": "String",
+            "persona_weights": "Map<PersonaID, Float>"
+          }
+        }
+      ],
+      "transition": "thread_list"
+    }
+  },
+  "contracts": {
+    "ThreadSummary": {
+      "id": "String",
+      "title_key": "String",
+      "unread_count": "Int"
+    },
+    "MessageBubble": {
+      "author_id": "String",
+      "body_key": "String",
+      "timestamp": "String"
+    },
+    "ReplyOption": {
+      "id": "String",
+      "label_key": "String",
+      "tag": "String",
+      "meter_effects": "Map<MeterID, Float>",
+      "persona_bias": "Map<PersonaID, Float>",
+      "toast_template_id": "String"
+    }
+  }
+}

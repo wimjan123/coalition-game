@@ -1,0 +1,94 @@
+{
+  "id": "news_app",
+  "version": 1,
+  "description": "Headline framing tool with three positioning buttons per story.",
+  "entry_state": "headline_grid",
+  "states": {
+    "headline_grid": {
+      "context": {
+        "headlines": "Array<HeadlineCard>"
+      },
+      "inputs": [
+        {
+          "event": "open_headline",
+          "payload": {
+            "headline_id": "String"
+          },
+          "transition": "framing_panel"
+        }
+      ],
+      "outputs": []
+    },
+    "framing_panel": {
+      "context": {
+        "headline": "HeadlineDetail"
+      },
+      "inputs": [
+        {
+          "event": "select_framing",
+          "payload": {
+            "framing_id": "String"
+          },
+          "transition": "resolution_push"
+        },
+        {
+          "event": "close_panel",
+          "payload": {},
+          "transition": "headline_grid"
+        }
+      ],
+      "outputs": []
+    },
+    "resolution_push": {
+      "context": {
+        "selected_framing": "FramingOption"
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "meter_delta",
+          "payload": {
+            "meter_effects": "Map<MeterID, Float>",
+            "source": "news"
+          }
+        },
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "String",
+            "severity": "info | warning | critical"
+          }
+        },
+        {
+          "type": "headline_update",
+          "payload": {
+            "headline_variant_key": "String",
+            "tag": "String"
+          }
+        }
+      ],
+      "transition": "headline_grid"
+    }
+  },
+  "contracts": {
+    "HeadlineCard": {
+      "id": "String",
+      "title_key": "String",
+      "lead_key": "String",
+      "critical_state_key": "String"
+    },
+    "HeadlineDetail": {
+      "id": "String",
+      "title_key": "String",
+      "lead_key": "String",
+      "framing_options": "Array<FramingOption>"
+    },
+    "FramingOption": {
+      "id": "String",
+      "label_key": "String",
+      "meter_effects": "Map<MeterID, Float>",
+      "headline_variant_key": "String",
+      "social_tag": "String"
+    }
+  }
+}

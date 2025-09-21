@@ -1,0 +1,58 @@
+{
+  "threads": [
+    {
+      "id": "budget_push",
+      "title": "Chief of Staff: Budget hole widens",
+      "replies": [
+        {
+          "id": "budget_reassure",
+          "label": "Promise a leaner coalition budget",
+          "tag": "#budget",
+          "meter_effects": {"support": 3.0, "donations": -1.0},
+          "persona_bias": {"press_correspondent": 1.5, "ngo_watch": 1.0}
+        },
+        {
+          "id": "budget_delay",
+          "label": "Delay the plan pending Raad van State advice",
+          "tag": "#governance",
+          "meter_effects": {"legitimacy": 2.0, "support": -1.0},
+          "persona_bias": {"policy_wonk": 1.2}
+        },
+        {
+          "id": "budget_spin",
+          "label": "Spin the gap as a temporary investment",
+          "tag": "#economy",
+          "meter_effects": {"support": -2.0, "donations": 2.0},
+          "persona_bias": {"donor_bloc": 1.3}
+        }
+      ]
+    },
+    {
+      "id": "immigration_flash",
+      "title": "Tweede Kamer question hour: immigration",
+      "replies": [
+        {
+          "id": "immigration_soften",
+          "label": "Highlight humanitarian coalition wing",
+          "tag": "#immigration",
+          "meter_effects": {"support": -1.0, "legitimacy": 3.0},
+          "persona_bias": {"ngo_watch": 1.5}
+        },
+        {
+          "id": "immigration_firm",
+          "label": "Double down on hardline talking points",
+          "tag": "#immigration",
+          "meter_effects": {"support": 2.0, "legitimacy": -2.0},
+          "persona_bias": {"talk_radio": 1.5}
+        },
+        {
+          "id": "immigration_deflect",
+          "label": "Deflect to climate coalition wins",
+          "tag": "#climate",
+          "meter_effects": {"support": 1.0, "donations": 1.0},
+          "persona_bias": {"green_column": 1.2}
+        }
+      ]
+    }
+  ]
+}

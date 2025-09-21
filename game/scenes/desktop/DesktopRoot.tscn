@@ -1,0 +1,120 @@
+ [gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/desktop/DesktopShell.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/desktop/Dock.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/systems/ToastBus.gd" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/apps/Messages.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/apps/News.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/apps/Polling.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://scenes/apps/Calendar.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://scenes/apps/CoalitionTalks.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://scenes/apps/Social.tscn" id="9"]
+[ext_resource type="Script" path="res://scripts/systems/MeterFeedback.gd" id="10"]
+[ext_resource type="Script" path="res://scripts/systems/TelemetryLogger.gd" id="11"]
+[ext_resource type="Theme" path="res://ui/themes/DemoDesktopTheme.tres" id="12"]
+[ext_resource type="Script" path="res://scripts/desktop/FocusManager.gd" id="13"]
+[ext_resource type="Script" path="res://scripts/persistence/SessionSerializer.gd" id="14"]
+[ext_resource type="Script" path="res://scripts/systems/DemoBootstrap.gd" id="15"]
+
+[node name="DesktopRoot" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("1")
+dock_scene = ExtResource("2")
+meter_feedback_path = NodePath("MeterFeedback")
+telemetry_logger_path = NodePath("TelemetryLogger")
+focus_manager_path = NodePath("FocusManager")
+bootstrap_path = NodePath("DemoBootstrap")
+theme = ExtResource("12")
+window_configs = [
+{
+"window_id": "messages",
+"scene": ExtResource("4"),
+"display_name": "Messages",
+"spawn_position": Vector2(180, 160),
+"start_open": true,
+"focus_path": NodePath("Content/ThreadList")
+}, {
+"window_id": "news",
+"scene": ExtResource("5"),
+"display_name": "News",
+"spawn_position": Vector2(760, 180),
+"start_open": true,
+"focus_path": NodePath("Content/HeadlineList")
+}, {
+"window_id": "polling",
+"scene": ExtResource("6"),
+"display_name": "Polling",
+"spawn_position": Vector2(1180, 180),
+"start_open": true,
+"focus_path": NodePath("Content/MeterList")
+}, {
+"window_id": "calendar",
+"scene": ExtResource("7"),
+"display_name": "Calendar",
+"spawn_position": Vector2(420, 720),
+"start_open": false,
+"focus_path": NodePath("Content/Header/AdvanceButton")
+}, {
+"window_id": "coalition",
+"scene": ExtResource("8"),
+"display_name": "Coalition Talks",
+"spawn_position": Vector2(880, 720),
+"start_open": false,
+"focus_path": NodePath("Content/OfferContainer")
+}, {
+"window_id": "social",
+"scene": ExtResource("9"),
+"display_name": "Social",
+"spawn_position": Vector2(40, 720),
+"start_open": false,
+"focus_path": NodePath("Content/Composer/TagOptions")
+}
+]
+
+[node name="Wallpaper" type="ColorRect" parent="DesktopRoot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.11, 0.13, 0.17, 1)
+
+[node name="WindowRoot" type="Control" parent="DesktopRoot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DockAnchor" type="Control" parent="DesktopRoot"]
+anchor_right = 1.0
+anchor_bottom = 0.0
+custom_minimum_size = Vector2(0, 92)
+
+[node name="ToastCanvas" type="CanvasLayer" parent="DesktopRoot"]
+layer = 50
+script = ExtResource("3")
+
+[node name="ToastContainer" type="VBoxContainer" parent="DesktopRoot/ToastCanvas"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -360.0
+offset_top = 32.0
+offset_right = -32.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 1
+custom_constants/separation = 12
+
+[node name="MeterFeedback" type="Node" parent="DesktopRoot"]
+script = ExtResource("10")
+desktop_shell_path = NodePath("../DesktopRoot")
+
+[node name="TelemetryLogger" type="Node" parent="DesktopRoot"]
+script = ExtResource("11")
+
+[node name="FocusManager" type="Node" parent="DesktopRoot"]
+script = ExtResource("13")
+
+[node name="SessionSerializer" type="Node" parent="DesktopRoot"]
+script = ExtResource("14")
+
+[node name="DemoBootstrap" type="Node" parent="DesktopRoot"]
+script = ExtResource("15")

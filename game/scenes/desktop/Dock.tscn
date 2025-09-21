@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/desktop/DockController.gd" id="1"]
+
+[node name="Dock" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 0.0
+custom_minimum_size = Vector2(0, 92)
+modulate = Color(1, 1, 1, 0.92)
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="Dock"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.07, 0.08, 0.1, 1)
+
+[node name="AppContainer" type="HBoxContainer" parent="Dock"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+position = Vector2(0, 12)
+offset_left = -480.0
+offset_right = 480.0
+custom_constants/separation = 24
+

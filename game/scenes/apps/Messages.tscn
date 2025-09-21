@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/apps/messages/MessagesApp.gd" id="1"]
+
+[node name="Messages" type="Window"]
+initial_position = Vector2i(180, 140)
+size = Vector2i(520, 640)
+script = ExtResource("1")
+
+[node name="Content" type="VBoxContainer" parent="Messages"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+custom_constants/separation = 16
+
+[node name="ThreadList" type="ItemList" parent="Messages/Content"]
+size_flags_vertical = 3
+
+[node name="ReplyContainer" type="VBoxContainer" parent="Messages/Content"]
+size_flags_vertical = 2
+custom_constants/separation = 12
+

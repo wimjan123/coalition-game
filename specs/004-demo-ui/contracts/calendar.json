@@ -1,0 +1,62 @@
+{
+  "id": "calendar_app",
+  "version": 1,
+  "description": "Weekly agenda highlighting upcoming institutional milestones and reminder toasts.",
+  "entry_state": "week_view",
+  "states": {
+    "week_view": {
+      "context": {
+        "current_week": "Int",
+        "events": "Array<CalendarEntry>",
+        "next_milestone": "CalendarEntry"
+      },
+      "inputs": [
+        {
+          "event": "advance_week",
+          "payload": {},
+          "transition": "week_view"
+        },
+        {
+          "event": "open_event",
+          "payload": {
+            "event_id": "String"
+          },
+          "transition": "event_detail"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "toast",
+          "payload": {
+            "toast_id": "String",
+            "severity": "info | warning",
+            "condition": "current_week + 1 == event.week"
+          }
+        }
+      ]
+    },
+    "event_detail": {
+      "context": {
+        "event": "CalendarEntry"
+      },
+      "inputs": [
+        {
+          "event": "close_event",
+          "payload": {},
+          "transition": "week_view"
+        }
+      ],
+      "outputs": []
+    }
+  },
+  "contracts": {
+    "CalendarEntry": {
+      "id": "String",
+      "week": "Int",
+      "institution": "String",
+      "reminder_text_key": "String",
+      "consequence_summary_key": "String",
+      "meter_targets": "Map<MeterID, Float>"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "personas": {
+    "press_correspondent": {
+      "display_name": "NOS Politiek",
+      "replies": {
+        "#budget": "NOS Politiek: Coalition vows phased cuts—Tweede Kamer wants details.",
+        "#governance": "NOS Politiek: Transparency pledge buys time, but opposition eyes follow-through."
+      }
+    },
+    "ngo_watch": {
+      "display_name": "RefugeeWatch NL",
+      "replies": {
+        "#immigration": "RefugeeWatch: Hardline quota risks humanitarian obligations.",
+        "#budget": "RefugeeWatch: Social services brace for austerity under new budget."
+      }
+    },
+    "policy_wonk": {
+      "display_name": "Beleid Nerd",
+      "replies": {
+        "#governance": "Beleid Nerd: Weekly dashboards? Finally some sunlight on coalition math.",
+        "#climate": "Beleid Nerd: Climate pivot only works if investment schedule survives Eerste Kamer." 
+      }
+    },
+    "donor_bloc": {
+      "display_name": "NL Business Bloc",
+      "replies": {
+        "#economy": "Business Bloc: Coalition hinting at investment tax credit sweeteners.",
+        "#infrastructure": "Business Bloc: Rail compromise still leaves logistics unanswered." 
+      }
+    },
+    "green_column": {
+      "display_name": "Groen Column",
+      "replies": {
+        "#climate": "Groen Column: Coalition touts climate gains while Raad van State reviews budget base.",
+        "#immigration": "Groen Column: Pivot to climate feels evasive during asylum crunch." 
+      }
+    },
+    "talk_radio": {
+      "display_name": "Radio Oranje",
+      "replies": {
+        "#immigration": "Radio Oranje: Coalition finally sounds tough—will Eerste Kamer believe it?"
+      }
+    }
+  }
+}
