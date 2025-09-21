@@ -12,7 +12,7 @@ signal window_closed(window_id: String)
 @export var telemetry_logger_path: NodePath = NodePath("TelemetryLogger")
 @export var focus_manager_path: NodePath = NodePath("FocusManager")
 @export var bootstrap_path: NodePath = NodePath("DemoBootstrap")
-@export var window_configs: Array = []
+@export var window_configs: Array[Dictionary] = []
 
 const WINDOW_ROOT_PATH := NodePath("WindowRoot")
 const DOCK_ANCHOR_PATH := NodePath("DockAnchor")
@@ -65,7 +65,7 @@ func close_window(window_id: String) -> void:
     if _active_windows.has(window_id):
         _close_window(window_id)
 
-func get_window(window_id: String) -> Window:
+func get_window_instance(window_id: String) -> Window:
     return _active_windows.get(window_id, null)
 
 func request_attention(window_id: String) -> void:
@@ -78,12 +78,17 @@ func show_toast(payload: Dictionary) -> void:
         _toast_bus.call("queue_toast", payload)
 
 func _spawn_window(window_id: String) -> void:
-    var record := _window_registry.get(window_id)
-    if record == null:
+    var record: Dictionary = _window_registry.get(window_id, {})
+    if record.is_empty():
         return
-    var instance: Window = record.scene.instantiate()
+    var scene := record.get("scene", null) as PackedScene
+    if scene == null:
+        return
+    var instance := scene.instantiate() as Window
+    if instance == null:
+        return
     instance.name = window_id
-    var metadata := record.get("metadata", {})
+    var metadata: Dictionary = record.get("metadata", {})
     instance.position = _get_spawn_position(metadata)
     instance.transient = true
     instance.popup()
@@ -119,8 +124,9 @@ func _focus_window(window_id: String) -> void:
             instance.move_to_front()
 
 func _get_spawn_position(metadata: Dictionary) -> Vector2:
-    if metadata.has("spawn_position"):
-        return metadata["spawn_position"]
+    var spawn_variant := metadata.get("spawn_position", null)
+    if spawn_variant is Vector2:
+        return spawn_variant
     return Vector2(120, 120) + Vector2(_active_windows.size() * 24, _active_windows.size() * 24)
 
 func _ensure_dock() -> void:
@@ -147,14 +153,15 @@ func _update_dock_state(window_id: String, is_open: bool) -> void:
         dock.call("set_window_state", window_id, is_open)
 
 func _bootstrap_windows() -> void:
-    for config in window_configs:
+    for config_variant in window_configs:
+        var config := config_variant
         if not config is Dictionary:
             continue
-        var window_id := config.get("window_id", "")
-        var scene: PackedScene = config.get("scene")
-        if typeof(scene) != TYPE_OBJECT or window_id == "":
+        var window_id := String(config.get("window_id", ""))
+        var scene := config.get("scene", null) as PackedScene
+        if scene == null or window_id == "":
             continue
-        var metadata := config.duplicate()
+        var metadata: Dictionary = config.duplicate()
         metadata.erase("scene")
         metadata.erase("window_id")
         register_window(window_id, scene, metadata)
@@ -209,12 +216,13 @@ func _dispatch_meter_update(result: Dictionary) -> void:
     if result == null:
         return
     var meters := result.get("meters", [])
-    var commentary := []
+    var commentary: Array = []
     if _bootstrap and _bootstrap.has_method("build_polling_commentary"):
         commentary = _bootstrap.call("build_polling_commentary", meters)
-    for window_id in _active_windows.keys():
-        var window := _active_windows[window_id]
-        if window_id == "polling" and window.has_method("apply_snapshot"):
+    for window_id_variant in _active_windows.keys():
+        var window_id := String(window_id_variant)
+        var window := _active_windows[window_id_variant] as Window
+        if window and window_id == "polling" and window.has_method("apply_snapshot"):
             window.call("apply_snapshot", meters, commentary)
 
 func _record_meter_event(source: String, result: Dictionary) -> void:
@@ -229,7 +237,8 @@ func _record_meter_event(source: String, result: Dictionary) -> void:
 func _register_focus_target(window_id: String, window_instance: Node, metadata: Dictionary) -> void:
     if _focus_manager == null or not _focus_manager.has_method("register_window"):
         return
-    var focus_path: NodePath = metadata.get("focus_path", NodePath(""))
+    var focus_path_variant := metadata.get("focus_path", NodePath(""))
+    var focus_path: NodePath = focus_path_variant if focus_path_variant is NodePath else NodePath(String(focus_path_variant))
     var focus_node: Control = null
     if not focus_path.is_empty() and window_instance.has_node(focus_path):
         focus_node = window_instance.get_node(focus_path)
@@ -238,7 +247,7 @@ func _register_focus_target(window_id: String, window_instance: Node, metadata: 
         if candidate is Control:
             focus_node = candidate
     if focus_node:
-        var label := metadata.get("display_name", window_id.capitalize())
+        var label := String(metadata.get("display_name", window_id.capitalize()))
         if focus_node is Control:
             focus_node.accessible_description = "Desktop window: %s" % label
         _focus_manager.call("register_window", window_id, focus_node)

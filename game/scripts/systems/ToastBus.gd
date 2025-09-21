@@ -1,11 +1,11 @@
 extends CanvasLayer
 
-@export var default_duration := 3.5
-@export var max_visible := 4
+@export var default_duration: float = 3.5
+@export var max_visible: int = 4
 @export var container_path: NodePath = NodePath("ToastContainer")
 
-var _queue: Array = []
-var _active_panels: Array = []
+var _queue: Array[Dictionary] = []
+var _active_panels: Array[PanelContainer] = []
 
 func _ready() -> void:
     if not has_node(container_path):
@@ -31,11 +31,14 @@ func clear_toasts() -> void:
 
 func _process_queue() -> void:
     while _queue.size() > 0 and _active_panels.size() < max_visible:
-        var payload := _queue.pop_front()
+        var payload_variant := _queue.pop_front()
+        var payload := payload_variant if payload_variant is Dictionary else {}
         _spawn_toast(payload)
 
 func _spawn_toast(payload: Dictionary) -> void:
-    var container := get_node(container_path)
+    var container := get_node(container_path) as VBoxContainer
+    if container == null:
+        return
     var panel := PanelContainer.new()
     panel.name = "ToastPanel"
     panel.custom_minimum_size = Vector2(320, 0)
@@ -57,7 +60,7 @@ func _spawn_toast(payload: Dictionary) -> void:
     title.add_theme_font_size_override("font_size", 18)
     vbox.add_child(title)
 
-    var body_text := payload.get("body", "")
+    var body_text := String(payload.get("body", ""))
     if body_text != "":
         var body := Label.new()
         body.text = body_text

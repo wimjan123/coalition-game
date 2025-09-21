@@ -3,18 +3,20 @@ extends Node
 @export var dock_path: NodePath = NodePath("../DockAnchor/Dock")
 
 var _dock: Control = null
-var _windows: Array = []
+var _windows: Array[Control] = []
 var _window_ids: Dictionary = {}
 
 func _ready() -> void:
-    _dock = get_node_or_null(dock_path)
-    if _dock and _dock.focus_mode == Control.FOCUS_NONE:
-        _dock.focus_mode = Control.FOCUS_ALL
+    var dock_node := get_node_or_null(dock_path)
+    if dock_node is Control:
+        _dock = dock_node as Control
+        if _dock.focus_mode == Control.FOCUS_NONE:
+            _dock.focus_mode = Control.FOCUS_ALL
 
 func register_window(window_id: String, control: Control) -> void:
     if control == null:
         return
-    if not control.focus_mode == Control.FOCUS_ALL:
+    if control.focus_mode != Control.FOCUS_ALL:
         control.focus_mode = Control.FOCUS_ALL
     if control not in _windows:
         _windows.append(control)

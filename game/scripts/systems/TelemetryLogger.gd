@@ -3,8 +3,8 @@ extends Node
 @export var log_path := "user://demo_sessions.csv"
 @export var include_headers := true
 
-var _headers_written := false
-var _headers := ["timestamp_iso", "source", "meter_id", "delta", "value", "is_critical"]
+var _headers_written: bool = false
+var _headers: Array[String] = ["timestamp_iso", "source", "meter_id", "delta", "value", "is_critical"]
 
 func _ready() -> void:
     _ensure_directory()
@@ -13,7 +13,7 @@ func _ready() -> void:
 func log_meter_deltas(source: String, deltas: Array) -> void:
     if deltas.is_empty():
         return
-    var mode := _headers_written ? FileAccess.WRITE_APPEND : FileAccess.WRITE
+    var mode: FileAccess.ModeFlags = FileAccess.WRITE_APPEND if _headers_written else FileAccess.WRITE
     var file := FileAccess.open(log_path, mode)
     if file == null:
         push_error("TelemetryLogger: Unable to open %s" % log_path)
@@ -22,7 +22,10 @@ func log_meter_deltas(source: String, deltas: Array) -> void:
         file.store_line(_headers.join(","))
         _headers_written = true
     var timestamp := Time.get_datetime_string_from_system(true)
-    for delta in deltas:
+    for delta_variant in deltas:
+        if not delta_variant is Dictionary:
+            continue
+        var delta := delta_variant as Dictionary
         var row := [
             timestamp,
             source,

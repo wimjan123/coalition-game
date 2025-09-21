@@ -9,10 +9,13 @@ var _app_buttons: Dictionary = {}
 func register_app(window_id: String, metadata: Dictionary = {}) -> void:
     if _app_buttons.has(window_id):
         return
-    var container := get_node(app_container_path)
+    var container := get_node_or_null(app_container_path) as Control
+    if container == null:
+        push_warning("DockController: App container missing for %s" % window_id)
+        return
     var button := Button.new()
-    button.name = window_id.capitalize()
-    button.text = metadata.get("display_name", window_id.capitalize())
+    button.name = StringName(window_id)
+    button.text = String(metadata.get("display_name", window_id.capitalize()))
     button.toggle_mode = true
     button.pressed = metadata.get("start_open", false)
     button.connect("pressed", Callable(self, "_on_button_pressed").bind(window_id))
@@ -21,8 +24,8 @@ func register_app(window_id: String, metadata: Dictionary = {}) -> void:
 
 func set_window_state(window_id: String, is_open: bool) -> void:
     var button := _app_buttons.get(window_id, null)
-    if button:
-        button.set_pressed_no_signal(is_open)
+    if button is Button:
+        (button as Button).set_pressed_no_signal(is_open)
 
 func _ready() -> void:
     if not has_node(app_container_path):

@@ -26,11 +26,11 @@ func load_snapshot() -> Dictionary:
         return {}
     var text := file.get_as_text()
     file.close()
-    var parse := JSON.parse_string(text)
-    if typeof(parse) != TYPE_DICTIONARY:
+    var parsed := JSON.parse_string(text)
+    if typeof(parsed) != TYPE_DICTIONARY:
         push_warning("SessionSerializer: Snapshot parse failed")
         return {}
-    return parse
+    return parsed
 
 func delete_snapshot() -> void:
     if FileAccess.file_exists(save_path):

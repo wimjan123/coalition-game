@@ -5,7 +5,7 @@ signal offer_committed(payload: Dictionary)
 @export var offer_container_path: NodePath = NodePath("Content/OfferContainer")
 @export var summary_path: NodePath = NodePath("Content/Summary")
 
-var _offers: Array = []
+var _offers: Array[Dictionary] = []
 var _context: Dictionary = {}
 
 func _ready() -> void:
@@ -14,23 +14,27 @@ func _ready() -> void:
 
 func load_context(context: Dictionary, offers: Array) -> void:
     _context = context
-    _offers = offers
+    _offers = []
+    for offer in offers:
+        if offer is Dictionary:
+            _offers.append(offer)
     _render_offers()
 
 func _render_offers() -> void:
-    var container := get_node_or_null(offer_container_path)
-    if container == null:
+    var container_node := get_node_or_null(offer_container_path)
+    if container_node == null or not (container_node is VBoxContainer):
         return
+    var container := container_node as VBoxContainer
     for child in container.get_children():
         child.queue_free()
-    for offer in _offers:
+    for offer_dict in _offers:
         var button := Button.new()
-        button.text = offer.get("label", "Offer")
-        button.connect("pressed", Callable(self, "_on_offer_selected").bind(offer))
+        button.text = String(offer_dict.get("label", "Offer"))
+        button.connect("pressed", Callable(self, "_on_offer_selected").bind(offer_dict))
         container.add_child(button)
-    var summary := get_node_or_null(summary_path)
-    if summary:
-        summary.text = _context.get("summary", "Select a concession to keep negotiations moving.")
+    var summary_node := get_node_or_null(summary_path)
+    if summary_node is Label:
+        (summary_node as Label).text = _context.get("summary", "Select a concession to keep negotiations moving.")
 
 func _on_offer_selected(offer: Dictionary) -> void:
     emit_signal("offer_committed", {
